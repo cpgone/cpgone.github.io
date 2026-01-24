@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3;url=http://one.cpg.kfupm.edu.sa">
     <title>Local Development Access</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,24 +15,41 @@
             <h1>Local Development Site</h1>
             
             <p class="warning-text">
-                <strong>Warning:</strong> This page provides access to a local development environment intended
-                for internal use. Access requires explicit action due to security restrictions.
+                <strong>Warning:</strong> Accessing an internal environment. 
+                You will be redirected automatically in <span id="timer">3</span> seconds...
             </p>
 
             <div class="action-area">
-                <a href="http://10.210.15.171" class="btn">
-                    Continue to Site
+                <a href="10.210.15.171" class="btn" id="redirect-btn">
+                    Continue Now
                 </a>
             </div>
 
             <div class="note">
                 <p>
-                    ⓘ <strong>Note:</strong> Ensure you are connected to the KFUPM network or VPN. 
-                    Google Chrome is recommended.
+                    ⓘ <strong>Note:</strong> Ensure you are connected to the local network. 
                 </p>
             </div>
         </div>
     </div>
+
+    <script>
+        // Set the destination and the time
+        const destination = "http://one.cpg.kfupm.edu.sa";
+        let timeLeft = 3;
+        const timerElement = document.getElementById('timer');
+
+        // Update countdown every 1 second
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                window.location.href = destination;
+            }
+        }, 1000);
+    </script>
 
 </body>
 </html>
