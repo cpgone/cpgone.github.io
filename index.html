@@ -3,52 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="3;url=http://10.210.15.171/">
-    <title>Local Development Access</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Development Access Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #FFF;
+            border-bottom-color: #3b82f6;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="card">
-            <span class="icon">⚙️</span>
-            <h1>Local Development Site</h1>
-            
-            <p class="warning-text">
-                <strong>Warning:</strong> Accessing an internal environment. 
-                You will be redirected automatically in <span id="timer">3</span> seconds...
+    <div class="glass-card p-8 max-w-md w-full mx-4 text-center">
+        <div class="mb-6">
+            <span class="loader"></span>
+        </div>
+        
+        <h1 class="text-2xl font-bold mb-2">Connecting to Environment</h1>
+        <p class="text-blue-300 text-sm mb-6" id="status-text">Redirecting to primary local site...</p>
+
+        <div class="bg-black/30 rounded-lg p-4 mb-6 text-left border border-white/5">
+            <p class="text-xs uppercase tracking-widest text-gray-400 font-semibold mb-2">Network Targets</p>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm">Primary (Local)</span>
+                <code class="text-xs bg-white/10 px-2 py-1 rounded">10.210.15.171</code>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Fallback (External)</span>
+                <code class="text-xs bg-white/10 px-2 py-1 rounded" id="fallback-label">google.com</code>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            <a href="http://10.210.15.171/" class="block w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-medium transition-all transform active:scale-95">
+                Try Local Now
+            </a>
+            <p class="text-[10px] text-gray-500 italic">
+                If the local site is unreachable, you will be moved to the fallback in <span id="timer">2</span>s.
             </p>
-
-            <div class="action-area">
-                <a href="http://10.210.15.171/" class="btn" id="redirect-btn">
-                    Continue Now
-                </a>
-            </div>
-
-            <div class="note">
-                <p>
-                    ⓘ <strong>Note:</strong> Ensure you are connected to the local network. 
-                </p>
-            </div>
         </div>
     </div>
 
     <script>
-        // Set the destination and the time
-        const destination = "http://10.210.15.171/";
-        let timeLeft = 3;
+        // Configuration
+        const PRIMARY_URL = "http://10.210.15.171/";
+        const FALLBACK_URL = "https://digitalgeosciences.com/"; // Change this to your desired fallback
+        let secondsLeft = 2;
+
+        document.getElementById('fallback-label').textContent = new URL(FALLBACK_URL).hostname;
+
+        // 1. Immediate Attempt
+        // We try to trigger the local redirect immediately upon script execution
+        window.location.replace(PRIMARY_URL);
+
+        // 2. Fallback Logic
+        // If the window is still active after the timeout, the primary redirect likely failed
         const timerElement = document.getElementById('timer');
+        const statusText = document.getElementById('status-text');
 
-        // Update countdown every 1 second
         const countdown = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft;
+            secondsLeft--;
+            if (timerElement) timerElement.textContent = secondsLeft;
 
-            if (timeLeft <= 0) {
+            if (secondsLeft <= 0) {
                 clearInterval(countdown);
-                window.location.href = destination;
+                statusText.textContent = "Switching to fallback site...";
+                statusText.classList.replace('text-blue-300', 'text-yellow-400');
+                
+                // Final fallback redirect
+                window.location.replace(FALLBACK_URL);
             }
         }, 1000);
+
+        // Clean up if user manually navigates away
+        window.onbeforeunload = () => clearInterval(countdown);
     </script>
 
 </body>
