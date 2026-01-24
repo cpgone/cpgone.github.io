@@ -46,9 +46,26 @@
         </div>
         
         <h1 class="text-2xl font-bold mb-2">Connecting to Environment</h1>
-        <p class="text-blue-300 text-sm mb-6" id="status-text">Redirecting to primary local site...</p>
+        <p class="text-blue-300 text-sm mb-6" id="status-text">Redirecting to primary environment...</p>
+
+        <div class="bg-black/30 rounded-lg p-4 mb-6 text-left border border-white/5">
+            <p class="text-xs uppercase tracking-widest text-gray-400 font-semibold mb-2">Network Status</p>
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm">Primary Node</span>
+                <code class="text-xs bg-white/10 px-2 py-1 rounded">10.210.15.171</code>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm">Fallback Node</span>
+                <code class="text-xs bg-white/10 px-2 py-1 rounded">External Relay</code>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            <a href="http://10.210.15.171/" class="block w-full py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-medium transition-all transform active:scale-95">
+                Continue Manually
+            </a>
             <p class="text-[10px] text-gray-500 italic">
-                If the local site is unreachable, you will be moved to the fallback in <span id="timer">2</span>s.
+                Automatic failover in <span id="timer">2</span>s if node is unreachable.
             </p>
         </div>
     </div>
@@ -56,17 +73,13 @@
     <script>
         // Configuration
         const PRIMARY_URL = "http://10.210.15.171/";
-        const FALLBACK_URL = "https://digitalgeosciences.com/"; // Change this to your desired fallback
+        const FALLBACK_URL = "https://digitalgeosciences.com/"; 
         let secondsLeft = 2;
 
-        document.getElementById('fallback-label').textContent = new URL(FALLBACK_URL).hostname;
-
         // 1. Immediate Attempt
-        // We try to trigger the local redirect immediately upon script execution
         window.location.replace(PRIMARY_URL);
 
         // 2. Fallback Logic
-        // If the window is still active after the timeout, the primary redirect likely failed
         const timerElement = document.getElementById('timer');
         const statusText = document.getElementById('status-text');
 
@@ -76,7 +89,7 @@
 
             if (secondsLeft <= 0) {
                 clearInterval(countdown);
-                statusText.textContent = "Switching to fallback site...";
+                statusText.textContent = "Switching to fallback node...";
                 statusText.classList.replace('text-blue-300', 'text-yellow-400');
                 
                 // Final fallback redirect
