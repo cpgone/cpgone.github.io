@@ -3,172 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon | Digital Geosciences</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Digital Geosciences | Coming Soon</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-light: #f0f4f9;
+            --text-main: #1f1f1f;
+            --text-sub: #444746;
+        }
+
         body {
-            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-            background-color: #f0f4f9;
-            color: #1f1f1f;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
             overflow-x: hidden;
+            min-height: 100dvh;
         }
 
-        /* Light Mode Ambient Mesh Gradient Background */
-        .dg-bg-mesh-light {
-            position: fixed;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 15% 20%, rgba(168, 199, 250, 0.45) 0%, transparent 45%),
-                radial-gradient(circle at 85% 25%, rgba(211, 227, 253, 0.6) 0%, transparent 50%),
-                radial-gradient(circle at 50% 75%, rgba(232, 222, 248, 0.5) 0%, transparent 50%),
-                radial-gradient(circle at 75% 80%, rgba(241, 181, 222, 0.3) 0%, transparent 45%);
-            filter: blur(70px);
-            animation: meshShiftLight 16s ease-in-out infinite alternate;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes meshShiftLight {
-            0% {
-                transform: scale(1) translate(0px, 0px);
-            }
-            50% {
-                transform: scale(1.06) translate(-12px, 15px);
-            }
-            100% {
-                transform: scale(0.96) translate(15px, -12px);
-            }
-        }
-
-        /* Continuous subtle pulse animation for logo container */
-        .logo-glow-light {
-            position: absolute;
-            inset: -15px;
-            background: radial-gradient(circle, rgba(26, 115, 232, 0.15) 0%, rgba(104, 82, 214, 0.1) 50%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(16px);
-            animation: logoPulse 3.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes logoPulse {
-            0% { opacity: 0.4; transform: scale(0.95); }
-            100% { opacity: 0.95; transform: scale(1.15); }
-        }
-
-        /* Digital Geosciences Multi-tone Gradient Text */
-        .dg-text-gradient-light {
-            background: linear-gradient(135deg, #0f52ba 0%, #1a73e8 40%, #6852d6 80%, #9c27b0 100%);
+        /* Fluid typography */
+        .title-gradient {
+            background: linear-gradient(135deg, #1a73e8 0%, #7c4dff 50%, #d93025 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-size: clamp(2rem, 5vw + 1rem, 3.75rem);
         }
 
-        /* Light Mode Glassmorphism Card Styling */
-        .dg-glass-light {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px -5px rgba(15, 82, 186, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+        .body-text {
+            font-size: clamp(0.95rem, 1.5vw + 0.5rem, 1.125rem);
         }
 
-        /* Entrance Fade-In Animations */
-        .fade-in-up {
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.25s; }
-        .delay-3 { animation-delay: 0.4s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Shimmer effect for progress bar */
-        @keyframes shimmerLight {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .shimmer-bar-light::after {
-            content: '';
+        /* Ambient animated blobs */
+        .blob {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
-            animation: shimmerLight 2.5s infinite;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 18s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: clamp(250px, 45vw, 600px);
+            height: clamp(250px, 45vw, 600px);
+            background: radial-gradient(circle, rgba(168, 199, 250, 0.8) 0%, rgba(211, 227, 253, 0.2) 70%);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: clamp(280px, 50vw, 650px);
+            height: clamp(280px, 50vw, 650px);
+            background: radial-gradient(circle, rgba(211, 187, 253, 0.7) 0%, rgba(241, 238, 254, 0.2) 70%);
+            animation-delay: -6s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 30%;
+            width: clamp(200px, 35vw, 450px);
+            height: clamp(200px, 35vw, 450px);
+            background: radial-gradient(circle, rgba(248, 218, 218, 0.6) 0%, rgba(254, 237, 237, 0.1) 70%);
+            animation-delay: -12s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 40px) scale(1.08); }
+            100% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Card glassmorphism without background/border for logo */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05),
+                        0 0 15px rgba(255, 255, 255, 0.5) inset;
+        }
+
+        .contact-pill {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .contact-pill:hover {
+            background: #ffffff;
+            border-color: rgba(26, 115, 232, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(26, 115, 232, 0.15);
+        }
+
+        /* Sparkle animation */
+        .sparkle-icon {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(26, 115, 232, 0.3)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 14px rgba(124, 77, 255, 0.5)); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between items-center relative selection:bg-blue-200 selection:text-blue-900 px-4 sm:px-6 py-8">
+<body class="flex flex-col justify-between items-center relative px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
 
-    <!-- Ambient Mesh Gradient Light Background -->
-    <div class="dg-bg-mesh-light"></div>
+    <!-- Ambient Floating Gradients -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 
-    <!-- Top Navigation Header -->
-    <header class="w-full max-w-5xl flex justify-between items-center z-10 py-2">
-        <div class="flex items-center space-x-3">
-            <span class="text-sm font-semibold tracking-wide text-slate-600">info@digitalgeosciences.com</span>
-        </div>
-        
-        <div class="flex items-center space-x-2 text-xs bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-full px-3.5 py-1.5 text-slate-600 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-blue-600 animate-ping"></span>
-            <span class="font-medium text-slate-700">Under Development</span>
-        </div>
+    <!-- Header / Brand Logo Section (Cleaned up: No background, box-shadow or border card) -->
+    <header class="w-full max-w-4xl flex justify-center items-center z-10 pt-2 pb-4">
+        <a href="#" class="inline-block transition-transform hover:scale-[1.02] duration-300">
+            <img 
+                src="https://digitalgeosciences.com/images/logo.png" 
+                alt="Digital Geosciences Logo" 
+                class="h-12 sm:h-16 md:h-20 w-auto object-contain"
+                onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-2xl font-bold tracking-tight text-slate-800\'>DIGITAL GEOSCIENCES</span>';"
+            />
+        </a>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="w-full max-w-2xl text-center my-auto z-10 py-8 flex flex-col items-center">
-        
-        <!-- Logo Display Box with Ambient Glow -->
-        <div class="relative mb-8 fade-in-up delay-1">
-            <div class="logo-glow-light"></div>
-            <div class="p-6 sm:p-8 rounded-3xl dg-glass-light flex items-center justify-center relative z-10 transition-transform duration-300 hover:scale-[1.02]">
-                <img 
-                    src="https://digitalgeosciences.com/images/logo.png" 
-                    alt="Digital Geosciences Logo" 
-                    class="h-16 sm:h-20 w-auto max-w-[260px] sm:max-w-[320px] object-contain drop-shadow-sm"
-                    onerror="this.onerror=null; this.src='https://placehold.co/300x100/ffffff/1a73e8?text=Digital+Geosciences';"
-                />
+    <!-- Main Hero Card -->
+    <main class="w-full max-w-2xl z-10 my-auto py-6">
+        <div class="glass-card rounded-3xl p-6 sm:p-10 md:p-12 text-center relative overflow-hidden">
+            
+            <!-- Gemini Sparkle Badge -->
+            <div class="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-white/80 shadow-sm border border-slate-100">
+                <svg class="w-6 h-6 sm:w-8 sm:h-8 sparkle-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C12 6.62742 6.62742 12 0 12C6.62742 12 12 17.3726 12 24C12 17.3726 17.3726 12 24 12C17.3726 12 12 6.62742 12 0Z" fill="url(#sparkle-grad)"/>
+                    <defs>
+                        <linearGradient id="sparkle-grad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#1A73E8"/>
+                            <stop offset="0.5" stop-color="#7C4DFF"/>
+                            <stop offset="1" stop-color="#D93025"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
+
+            <!-- Main Heading -->
+            <h1 class="title-gradient font-bold tracking-tight mb-4 sm:mb-6 leading-tight">
+                Coming Soon
+            </h1>
+
+            <!-- Subtitle Description -->
+            <p class="body-text text-slate-600 font-normal leading-relaxed max-w-lg mx-auto mb-8 sm:mb-10">
+                We are currently enhancing our digital platform to provide you with an improved, cutting-edge experience. Thank you for your patience while we complete these updates.
+            </p>
+
+            <!-- Interactive Contact Button -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="mailto:info@digitalgeosciences.com" class="contact-pill w-full sm:w-auto px-6 py-3.5 rounded-2xl flex items-center justify-center gap-3 text-slate-800 font-medium text-sm sm:text-base group">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <span>info@digitalgeosciences.com</span>
+                </a>
+            </div>
+
         </div>
-
-        <!-- Headline & Gratitude Message -->
-        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 mb-5 leading-tight fade-in-up delay-2">
-            <span class="dg-text-gradient-light">Coming Soon</span>
-        </h1>
-        
-        <p class="text-slate-600 text-base sm:text-lg max-w-xl font-normal leading-relaxed mb-4 fade-in-up delay-2">
-            Thank you for visiting Digital Geosciences! We are currently undergoing scheduled upgrades to refine our digital platform and deliver an enhanced user experience. We appreciate your patience and look forward to introducing our new features shortly.
-        </p>
-
     </main>
 
-    <!-- Footer Section -->
-    <footer class="w-full max-w-5xl flex flex-col sm:flex-row justify-center items-center z-10 pt-6 border-t border-slate-300/60 text-xs text-slate-500 gap-4">
-        <div class="flex items-center space-x-2">
-            <span>&copy; <span id="currentYear"></span> Digital Geosciences. All rights reserved.</span>
-        </div>
+    <!-- Footer -->
+    <footer class="w-full max-w-4xl text-center z-10 py-4 text-xs sm:text-sm text-slate-500">
+        <p>&copy; <span id="year"></span> Digital Geosciences. All rights reserved.</p>
     </footer>
 
     <script>
-        // Set dynamic current year
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
